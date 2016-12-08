@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="Referrer" content="origin">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>{{query}}에 대한 검색 결과</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="wrap" class="is-result">
+	<div class="header">
+		<a href="/" class="logo"><img src="img/moogle_logo.png"></a>
+		<div class="box_search">
+			<form class="form_search" action="/search">
+				<span class="input_area"><input type="search" class="input_search" name="q" value="{{query}}" placeholder="Type to search"></span>
+				<input type="submit" class="btn_search" value="Search">
+			</form>
+		</div>
+	</div>
+	<div id="content"><!-- ContentArea --></div>
+</div>
+</body>
+</html>
