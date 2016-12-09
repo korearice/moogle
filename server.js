@@ -21,7 +21,7 @@ app.get('/', function(req, res, next){
 	res.sendFile(__dirname+'/public/index.html');
 })
 
-var requestToSearchEngine = function(params){
+var getSearchResults = function(params){
 	return new Promise(function(resolve, reject){
 		request('http://www.google.com' + params, function(err, res, body){
 			if(err){
@@ -33,37 +33,45 @@ var requestToSearchEngine = function(params){
 	});
 }
 
+var getValidatedMarkup = function(body){
+	var $ = cheerio.load(body);
+	$('body img').each(function(){
+      var _this = $(this);
+	  var src = _this.attr('src');
+	  _this.attr('src', '/proxy?url=' + src);
+	});
+	$('#center_col a').each(function(){
+      var _this = $(this);
+	  var href = _this.attr('href');
+	  var REG_OUTLINK = /http/gi;
+	  if(REG_OUTLINK.test(href)){
+	      href = href.replace("/url?q=", "").split("&")[0];
+		  _this.attr('href', href);
+		  _this.attr('target', '_blank');
+	  }
+	});
+	return $;
+}
+
 app.get('/search', function(req, res, next){
 	return new Promise(function(resolve, reject){
 		var params = req.originalUrl;
-		requestToSearchEngine(params)
+		getSearchResults(params)
 		.then(function(body){
-			var $ = cheerio.load(body);
-			hbs.engine(__dirname + "/public/search.html", { query : req.query.q }, function(err, html){
+			hbs.engine(__dirname + "/public/search.html", { query : req.query.q }, function(err, template){
 				if(err) {
 					throw err;
 				}
-				$('body img').each(function(){
-				  var src = $(this).attr('src');
-				  $(this).attr('src', '/image?url=' + src);
-				});
-				$('#center_col a').each(function(){
-				  var href = $(this).attr('href');
-				  var REG_OUTLINK = /http/gi;
-				  if(REG_OUTLINK.test(href)){
-				      href = href.replace("/url?q=", "").split("&")[0];
-    				  $(this).attr('href', href);
-    				  $(this).attr('target', '_blank');
-				  }
-				});
-				var page = html.replace('<!-- ContentArea -->', $('#center_col').html() + '<div class=\"pagination\">' + $('#foot > table').html() + '<\/div>');
-				res.send(page);
+				var $g = getValidatedMarkup(body);
+				var $t = cheerio.load(template);
+				$t('#content').append($g('#center_col').html() + '<div class=\"pagination\">' + $g('#foot > table').html() + '<\/div>');
+				res.send($t.html());
 			});
 		});
 	});
 })
 
-app.get('/image', function(req, res, next){
+app.get('/proxy', function(req, res, next){
 	return new Promise(function(resolve, reject){
 		var url = req.query.url;
 		request(url).pipe(res);

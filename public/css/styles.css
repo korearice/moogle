@@ -23,7 +23,7 @@ html,body,#wrap{height:100%}
 /* Main */
 .is-main{white-space:nowrap;overflow-x:hidden;}
 .is-main:after{content:'';height:100%;display:inline-block;vertical-align:middle}
-.is-main .header{display:inline-block;width:100%;margin-top:-40px;padding-top:0;vertical-align:middle;text-align:center}
+.is-main .header{display:inline-block;width:100%;margin-top:-15%;padding-top:0;vertical-align:middle;text-align:center}
 .is-main .logo img{width:100%;margin:-10%}
 
 /* Result */
