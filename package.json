@@ -10,11 +10,12 @@
   "author": "KyoungHwan Min",
   "dependencies": {
     "async": "~0.2.8",
-    "express": "~3.2.4",
-    "socket.io": "~0.9.14",
     "bluebird": "^2.9.34",
     "cheerio": "^0.19.0",
+    "express": "~3.2.4",
     "morgan": "^1.6.1",
-    "request": "^2.60.0"
+    "node-handlebars": "^0.9.7",
+    "request": "^2.60.0",
+    "socket.io": "~0.9.14"
   }
 }

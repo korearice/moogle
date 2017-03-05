@@ -23,13 +23,13 @@ app.get('/', function(req, res, next){
 
 var getSearchResults = function(params){
 	return new Promise(function(resolve, reject){
-		request('http://www.google.com' + params, function(err, res, body){
+		request({url : 'https://www.google.co.uk' + params, encoding : 'utf-8'}, function(err, res, body){
 			if(err){
 				console.log(err);
 			} else{
 				resolve(body);
 			}
-		})
+		});
 	});
 }
 
@@ -46,7 +46,7 @@ var getValidatedMarkup = function(body){
 	  var REG_OUTLINK = /http/gi;
 	  if(REG_OUTLINK.test(href)){
 	      href = href.replace("/url?q=", "").split("&")[0];
-		  _this.attr('href', href);
+		  _this.attr('href', decodeURIComponent(href));
 		  _this.attr('target', '_blank');
 	  }
 	});
