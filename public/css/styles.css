@@ -34,3 +34,4 @@ html,body,#wrap{height:100%}
 .pagination{margin-top:40px;padding:10px 0 30px;border-top:1px solid #ccc;text-align:center;}
 .pagination span{margin:0!important;}
 .pagination .fl,.pagination b{display:inline-block;margin-left:10px!important;padding:5px;font-size:18px;text-align:center;}
+#foot td{padding:0 5px}
