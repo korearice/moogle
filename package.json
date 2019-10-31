@@ -12,7 +12,7 @@
     "async": "~0.2.8",
     "bluebird": "^2.9.34",
     "cheerio": "^0.19.0",
-    "express": "~3.2.4",
+    "express": "~4.17.1",
     "morgan": "^1.6.1",
     "node-handlebars": "^0.9.7",
     "request": "^2.60.0",
